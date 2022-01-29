@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<div class="app">
+    <div class="container">
+        <button type="button"
+            class="btn btn-refresh">刷新</button>
+        <div class="info">加载中...</div>
+
+    </div>
+</div>
+
+<body>
+
+</body>
+
+<script>
+    const testMode = false; const vscode = testMode ? {} : acquireVsCodeApi();
+
+    (function () {
+        window.addEventListener('message', event => {
+            const message = event.data;
+            console.log('Webview接收到的消息：', message);
+            let oInfo = document.querySelector(".info")
+            oInfo.innerHTML = JSON.stringify(message)
+        })
+
+        let refresh = document.querySelector(".btn-refresh");
+        refresh.addEventListener("click", () => {
+            console.log('refresh')
+            vscode.postMessage({ text: '你好，我是Webview啊！' });
+        }, false);
+
+    })()
+
+</script>
+
+</html>
